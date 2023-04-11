@@ -706,7 +706,7 @@ module.exports = class Function {
    /* Leveling
     * @param {Integer} ms
     */
-   level = (xp, multiplier = 69) => {
+   level = (xp, multiplier = 5) => {
       var XPAsli = xp
       var level = 1
       while (xp > 1) {
