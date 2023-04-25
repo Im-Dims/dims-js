@@ -275,7 +275,7 @@ Socket = (...args) => {
                ...options
             }, {
                quoted
-            }).then(() => fs.unlinkSync(file))
+            })
          } else if (/video/.test(mime)) {
             await client.sendPresenceUpdate('composing', jid)
             return client.sendMessage(jid, {
