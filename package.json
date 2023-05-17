@@ -1,6 +1,6 @@
 {
   "name": "@neoxr/neoxr-js",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "description": "All class functions for neoxr-bot",
   "main": "index.js",
   "scripts": {
@@ -36,6 +36,7 @@
       "syntax-error":"~1.4.0",
       "util":"~0.12.4"
    },
+  "homepage": "https://writesonic.com",
   "author": "Wildan Izzudin",
   "license": "ISC"
 }
