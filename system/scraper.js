@@ -177,7 +177,7 @@ module.exports = class Scraper {
       })
    }
 
-   /* Image Uploader V2 (srv.neoxr.tk) [Temp]
+   /* Image Uploader V2 (707a8191-3fe9-4568-a03e-763edd45f0bb.id.repl.co) [Temp]
     * @param {Buffer} buffer
     */
    uploadImageV2 = (buffer) => {
@@ -188,7 +188,7 @@ module.exports = class Scraper {
             } = await fromBuffer(buffer)
             let form = new FormData
             form.append('someFiles', buffer, 'tmp.' + ext)
-            let json = await (await fetch(`https://srv.neoxr.tk/api/upload`, {
+            let json = await (await fetch(`https://707a8191-3fe9-4568-a03e-763edd45f0bb.id.repl.co/api/upload`, {
                method: 'POST',
                body: form
             })).json()
@@ -204,7 +204,7 @@ module.exports = class Scraper {
       })
    }
 
-   /* File Uploader (srv.neoxr.tk) [Permanent]
+   /* File Uploader (707a8191-3fe9-4568-a03e-763edd45f0bb.id.repl.co) [Permanent]
     * @param {Buffer} buffer
     */
    uploadFile = (buffer) => {
@@ -215,7 +215,7 @@ module.exports = class Scraper {
             } = await fromBuffer(buffer)
             let form = new FormData
             form.append('someFiles', buffer, 'file.' + ext)
-            let json = await (await fetch(`https://srv.neoxr.tk/v2/upload`, {
+            let json = await (await fetch(`https://707a8191-3fe9-4568-a03e-763edd45f0bb.id.repl.co/v2/upload`, {
                method: 'POST',
                body: form
             })).json()
