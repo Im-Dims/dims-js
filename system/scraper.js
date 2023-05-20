@@ -183,12 +183,13 @@ module.exports = class Scraper {
    uploadImageV2 = (buffer) => {
       return new Promise(async (resolve, reject) => {
          try {
+            const server = await (await axios.get('https://neoxr.my.id/srv')).data
             const {
                ext
             } = await fromBuffer(buffer)
             let form = new FormData
             form.append('someFiles', buffer, 'tmp.' + ext)
-            let json = await (await fetch(`https://707a8191-3fe9-4568-a03e-763edd45f0bb.id.repl.co/api/upload`, {
+            let json = await (await fetch(server.api_path, {
                method: 'POST',
                body: form
             })).json()
@@ -210,12 +211,13 @@ module.exports = class Scraper {
    uploadFile = (buffer) => {
       return new Promise(async (resolve, reject) => {
          try {
+            const server = await (await axios.get('https://neoxr.my.id/srv')).data
             const {
                ext
             } = await fromBuffer(buffer)
             let form = new FormData
             form.append('someFiles', buffer, 'file.' + ext)
-            let json = await (await fetch(`https://707a8191-3fe9-4568-a03e-763edd45f0bb.id.repl.co/v2/upload`, {
+            let json = await (await fetch(server.api_path, {
                method: 'POST',
                body: form
             })).json()
