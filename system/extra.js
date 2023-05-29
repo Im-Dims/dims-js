@@ -423,7 +423,26 @@ Socket = (...args) => {
          quoted
       })
    }
-
+client.fakeStory = async (jid, text, caption, media) => {
+      let location = {
+         key: {
+            fromMe: false,
+            participant: `0@s.whatsapp.net`,
+            ...(jid ? {
+               remoteJid: 'status@broadcast'
+            } : {})
+         },
+         message: {
+            "imageMessage": {
+               "mimetype": "image/jpeg",
+               "caption": caption,
+               "jpegThumbnail": media
+            }
+         }
+      }
+      return client.reply(jid, text, location)
+   }
+      
    client.sendList = async (jid, title, text, footer, btnText, sections = [], quoted) => {
       let listMessage = {
          title: title,
