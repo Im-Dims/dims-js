@@ -520,11 +520,11 @@ Serialize = (client, m) => {
            type = Object.keys(m.quoted.message)[0]
            m.quoted = m.quoted.message[type]
          }
-         if (['pollCreationMessage']).includes(type) {
-           let pollmsg = await store.loadMessage(m.chat, m.msg.contextInfo.stanzaId)
-           let options = getAggregateVotesInPollMessage(pollmsg, global.client.user.id)
-           m.quoted.options = options
-         }
+         // if (['pollCreationMessage']).includes(type) {
+            // let pollmsg = await store.loadMessage(m.chat, m.msg.contextInfo.stanzaId)
+            // let options = getAggregateVotesInPollMessage(pollmsg, global.client.user.id)
+            // m.quoted.options = options
+         // }
          if (typeof m.quoted === 'string') m.quoted = {
             text: m.quoted
          }
