@@ -26,7 +26,9 @@ const {
    WAMessageProto,
    delay,
    jidDecode,
-   makeInMemoryStore
+   makeInMemoryStore,
+   getAggregateVotesInPollMessage,
+   updateMessageWithPollUpdate
 } = require(baileys)
 const PhoneNumber = require('awesome-phonenumber')
 const Exif = new (require('./exif'))
@@ -157,6 +159,30 @@ Socket = (...args) => {
          quoted
       })
    }
+   
+   client.sendProgress = async (jid, text, quoted) => {
+      const bars = [
+         '⬢⬡⬡⬡⬡⬡⬡⬡⬡⬡ 10%',
+         '⬢⬢⬢⬡⬡⬡⬡⬡⬡⬡ 30%',
+         '⬢⬢⬢⬢⬢⬡⬡⬡⬡⬡ 50%',
+         '⬢⬢⬢⬢⬢⬢⬢⬢⬢⬢ 100%',
+         text
+      ]
+      client.reply(jid, '⬡⬡⬡⬡⬡⬡⬡⬡⬡⬡ 0%', quoted).then(async v => {
+         for (let bar of bars) {
+            await Func.delay(1000)
+            client.relayMessage(jid, {
+               protocolMessage: {
+                  key: v.key,
+                  type: 14,
+                  editedMessage: {
+                     conversation: bar
+                  }
+               }
+            }, {})
+         }
+      })
+   }
 
    client.copyMsg = (jid, message, text = '', sender = client.user.id, options = {}) => {
       let copy = message.toJSON()
@@ -275,7 +301,7 @@ Socket = (...args) => {
             ...options
          }, {
             quoted
-         }).then(() => fs.unlinkSync(file))
+         })
       } else {
          if (/image\/(jpe?g|png)/.test(mime)) {
             await client.sendPresenceUpdate('composing', jid)
@@ -288,7 +314,7 @@ Socket = (...args) => {
                ...options
             }, {
                quoted
-            }).then(() => fs.unlinkSync(file))
+            })
          } else if (/video/.test(mime)) {
             await client.sendPresenceUpdate('composing', jid)
             return client.sendMessage(jid, {
@@ -301,7 +327,7 @@ Socket = (...args) => {
                ...options
             }, {
                quoted
-            }).then(() => fs.unlinkSync(file))
+            })
          } else if (/audio/.test(mime)) {
             await client.sendPresenceUpdate(opts && opts.ptt ? 'recoding' : 'composing', jid)
             const process = await Func.metaAudio(file, {
@@ -320,7 +346,7 @@ Socket = (...args) => {
                ...options
             }, {
                quoted
-            }).then(() => fs.unlinkSync(file))
+            })
          } else {
             await client.sendPresenceUpdate('composing', jid)
             return client.sendMessage(jid, {
@@ -333,7 +359,7 @@ Socket = (...args) => {
                ...options
             }, {
                quoted
-            }).then(() => fs.unlinkSync(file))
+            })
          }
       }
    }
@@ -474,6 +500,13 @@ Serialize = (client, m) => {
          m.mtype = m.msg.mtype
          m.msg = m.msg.msg
       }
+      // if (m.mtype === 'pollUpdateMessage') {
+      	// const pollUpdate = m.message.pollUpdateMessage;
+          // const pollmsg = await store.loadMessage(m.chat, m.message.pollUpdateMessage.pollCreationMessageKey.id)
+          // const res = getAggregateVotesInPollMessage(pollmsg, global.client.user.id)
+          // updateMessageWithPollUpdate(pollmsg, pollUpdate)
+          // const json = getAggregateVotesInPollMessage(pollmsg, client.user.id)
+      // }
       let quoted = m.quoted = typeof m.msg != 'undefined' ? m.msg.contextInfo ? m.msg.contextInfo.quotedMessage : null : null
       m.mentionedJid = typeof m.msg != 'undefined' ? m.msg.contextInfo ? m.msg.contextInfo.mentionedJid : [] : []
       if (m.quoted) {
@@ -486,6 +519,11 @@ Serialize = (client, m) => {
          if (['documentWithCaptionMessage'].includes(type)) {
            type = Object.keys(m.quoted.message)[0]
            m.quoted = m.quoted.message[type]
+         }
+         if (['pollCreationMessage']).includes(type) {
+           let pollmsg = await store.loadMessage(m.chat, m.msg.contextInfo.stanzaId)
+           let options = getAggregateVotesInPollMessage(pollmsg, global.client.user.id)
+           m.quoted.options = options
          }
          if (typeof m.quoted === 'string') m.quoted = {
             text: m.quoted
