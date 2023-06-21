@@ -9,7 +9,7 @@ const fetch = require('node-fetch')
 const FileType = require('file-type')
 const ffmpeg = require('fluent-ffmpeg')
 const pino = require('pino')
-const baileys = fs.existsSync('./node_modules/baileys') ? 'baileys' : fs.existsSync('./node_modules/@adiwajshing/baileys') ? '@adiwajshing/baileys' : 'bails'
+const baileys = fs.existsSync('./node_modules/@adiwajshing/baileys')
 const {
    default: makeWASocket,
    proto,
