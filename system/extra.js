@@ -9,7 +9,7 @@ const fetch = require('node-fetch')
 const FileType = require('file-type')
 const ffmpeg = require('fluent-ffmpeg')
 const pino = require('pino')
-//const baileys = fs.existsSync('./node_modules/@adiwajshing/baileys')
+const baileys = fs.existsSync('./node_modules/baileys') ? 'baileys' : fs.existsSync('./node_modules/@adiwajshing/baileys') ? '@adiwajshing/baileys' : 'bails'
 const {
    default: makeWASocket,
    proto,
@@ -27,7 +27,7 @@ const {
    delay,
    jidDecode,
    makeInMemoryStore
-} = require("@whiskeysockets/Baileys")
+} = require(baileys)
 const PhoneNumber = require('awesome-phonenumber')
 const Exif = new (require('./exif'))
 const Func = new (require('./functions'))
