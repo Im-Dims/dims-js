@@ -184,16 +184,18 @@ Socket = (...args) => {
       })
    }
 
-client.editMessage = async (jid, text, quoted) => {
+client.editMessage = async (jid, old, text, quoted) => {
+	client.reply(jid, old, quoted).then(async v => {         
             client.relayMessage(jid, {
                protocolMessage: {
-                  key: quoted.key,
+                  key: v.key,
                   type: 14,
                   editedMessage: {
                      conversation: text
                   }
                }
             }, {})
+		       })
    }
    client.copyMsg = (jid, message, text = '', sender = client.user.id, options = {}) => {
       let copy = message.toJSON()
