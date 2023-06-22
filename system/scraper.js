@@ -3,7 +3,7 @@ const cheerio = require('cheerio')
 const fetch = require('node-fetch')
 const FormData = require('form-data')
 const { fromBuffer } = require('file-type')
-global.creator = `@neoxrs – Wildan Izzudin`
+global.creator = `@neoxx.js – Wildan Izzudin`
 
 module.exports = class Scraper {
    /* Chat AI
@@ -126,24 +126,28 @@ module.exports = class Scraper {
       })
    }
 
-   /* Image Uploader (telegra.ph)
+   /* Image Uploader (freeimage.host) [Permanent]
     * @param {Buffer} buffer
     */
-   uploadImage = async (str) => {
+   uploadImage = async input => {
       return new Promise(async resolve => {
          try {
-            const image = Buffer.isBuffer(str) ? str : str.startsWith('http') ? await (await axios.get(str, {
+            const image = Buffer.isBuffer(input) ? input : input.startsWith('http') ? await (await axios.get(input, {
                responseType: 'arraybuffer'
-            })).data : str
-            const { ext } = await fromBuffer(image)
+            })).data : input
             let form = new FormData
-            form.append('file', Buffer.from(image), 'image.' + ext)
-            const json = await (await axios.post('https://telegra.ph/upload', form, {
+            form.append('source', Buffer.from(image), 'image.jpg')
+            form.append('type', 'file')
+            form.append('action', 'upload')
+            form.append('timestamp', (new Date() * 1))
+            form.append('auth_token', '3b0ead89f86c3bd199478b2e14afd7123d97507f')
+            form.append('nsfw', 0)
+            const json = await (await axios.post('https://freeimage.host/json', form, {
                headers: {
                   "Accept": "*/*",
                   "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; SM-J500G) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Mobile Safari/537.36",
-                  "Origin": "https://telegra.ph",
-                  "Referer": "https://telegra.ph",
+                  "Origin": "https://freeimage.host",
+                  "Referer": "https://freeimage.host/",
                   "Referrer-Policy": "strict-origin-when-cross-origin",
                   "sec-ch-ua": '"Chromium";v="107", "Not=A?Brand";v="24"',
                   "sec-ch-ua-platform": "Android",
@@ -154,16 +158,17 @@ module.exports = class Scraper {
                   ...form.getHeaders()
                }
             })).data
-            if (!json || json.length < 1) return resolve({
+            if (json.status_code != 200) return resolve({
                creator: global.creator,
                status: false,
-               msg: 'Failed to upload!'
+               msg: `Failed to Upload!`
             })
             resolve({
                creator: global.creator,
                status: true,
+               original: json,
                data: {
-                  url: 'https://telegra.ph' + json[0].src
+                  url: json.image.url
                }
             })
          } catch (e) {
@@ -197,6 +202,59 @@ module.exports = class Scraper {
          } catch (e) {
             console.log(e)
             return resolve({
+               creator: global.creator,
+               status: false,
+               msg: e.message
+            })
+         }
+      })
+   }
+
+   /* Image Uploader (telegra.ph)
+    * @param {Buffer} buffer
+    */
+   uploadImageV3 = async (str) => {
+      return new Promise(async resolve => {
+         try {
+            const image = Buffer.isBuffer(str) ? str : str.startsWith('http') ? await (await axios.get(str, {
+               responseType: 'arraybuffer'
+            })).data : str
+            const {
+               ext
+            } = await fromBuffer(image)
+            let form = new FormData
+            form.append('file', Buffer.from(image), 'image.' + ext)
+            const json = await (await axios.post('https://telegra.ph/upload', form, {
+               headers: {
+                  "Accept": "*/*",
+                  "User-Agent": "Mozilla/5.0 (Linux; Android 6.0.1; SM-J500G) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Mobile Safari/537.36",
+                  "Origin": "https://telegra.ph",
+                  "Referer": "https://telegra.ph",
+                  "Referrer-Policy": "strict-origin-when-cross-origin",
+                  "sec-ch-ua": '"Chromium";v="107", "Not=A?Brand";v="24"',
+                  "sec-ch-ua-platform": "Android",
+                  "sec-fetch-dest": "empty",
+                  "sec-fetch-mode": "cors",
+                  "sec-fetch-site": "same-origin",
+                  "x-requested-with": "XMLHttpRequest",
+                  ...form.getHeaders()
+               }
+            })).data
+            if (!json || json.length < 1) return resolve({
+               creator: global.creator,
+               status: false,
+               msg: 'Failed to upload!'
+            })
+            resolve({
+               creator: global.creator,
+               status: true,
+               data: {
+                  url: 'https://telegra.ph' + json[0].src
+               }
+            })
+         } catch (e) {
+            console.log(e)
+            resolve({
                creator: global.creator,
                status: false,
                msg: e.message
@@ -277,7 +335,7 @@ module.exports = class Scraper {
          }
       })
    }
-   
+
    /* To Video (EzGif)
     * @param {String|Buffer} str
     */
