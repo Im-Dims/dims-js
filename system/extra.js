@@ -159,7 +159,23 @@ Socket = (...args) => {
          quoted
       })
    }
-   
+
+client.sendLoading = async (jid, arr, quoted) => {
+      client.reply(jid, arr[0], quoted).then(async v => {
+         for (let ray of arr) {
+            await Func.delay(1000)
+            client.relayMessage(jid, {
+               protocolMessage: {
+                  key: v.key,
+                  type: 14,
+                  editedMessage: {
+                     conversation: ray
+                  }
+               }
+            }, {})
+         }
+      })
+   }
    client.sendProgress = async (jid, text, quoted) => {
       const bars = [
          '⬢⬡⬡⬡⬡⬡⬡⬡⬡⬡ 10%',
