@@ -6,6 +6,7 @@ const mime = require('mime-types')
 const chalk = require('chalk')
 const path = require('path')
 const FormData = require('form-data')
+const { getVideoDurationInSeconds } = require("get-video-duration")
 const { fromBuffer } = require('file-type')
 const { green, blueBright, redBright } = require('chalk')
 const { tmpdir } = require('os')
@@ -192,6 +193,17 @@ module.exports = class Function {
     * @param {Integer} ms
     */
    toTime = (ms) => {
+      let h = Math.floor(ms / 3600000)
+      let m = Math.floor(ms / 60000) % 60
+      let s = Math.floor(ms / 1000) % 60
+      return [h, m, s].map(v => v.toString().padStart(2, 0)).join(':')
+   }
+   /* Time Format from url
+    * @param {Integer} ms
+    */
+   toDuration = (url) => {
+      let scndurl = await getVideoDurationInSeconds(url)
+      const ms = scndurl * 1000;
       let h = Math.floor(ms / 3600000)
       let m = Math.floor(ms / 60000) % 60
       let s = Math.floor(ms / 1000) % 60

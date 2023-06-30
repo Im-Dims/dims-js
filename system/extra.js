@@ -9,6 +9,7 @@ const fetch = require('node-fetch')
 const FileType = require('file-type')
 const ffmpeg = require('fluent-ffmpeg')
 const pino = require('pino')
+const sh = require("caliph-api")
 const baileys = fs.existsSync('./node_modules/baileys') ? 'baileys' : fs.existsSync('./node_modules/@adiwajshing/baileys') ? '@adiwajshing/baileys' : 'bails'
 const {
    default: makeWASocket,
@@ -263,7 +264,13 @@ client.editMessage = async (jid, old, text, quoted) => {
       }
       return buffer
    }
-
+  client.uploadFile = async (message) => {
+	let data = await sh.tools.uploadFile(message)
+	return {
+		server: "Aeona Drive",
+		result: data.result
+		}
+   }
    client.reply = async (jid, text, quoted, options) => {
       await client.sendPresenceUpdate('composing', jid)
       return client.sendMessage(jid, {
