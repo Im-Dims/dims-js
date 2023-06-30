@@ -201,7 +201,7 @@ module.exports = class Function {
    /* Time Format from url
     * @param {Integer} ms
     */
-   toDuration = (url) => {
+   toDuration = async (url) => {
       let scndurl = await getVideoDurationInSeconds(url)
       const ms = scndurl * 1000;
       let h = Math.floor(ms / 3600000)

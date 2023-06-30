@@ -1,5 +1,5 @@
 {
-  "name": "@neoxr/neoxr-js",
+  "name": "neoxr-js",
   "version": "1.5.5",
   "description": "All class functions for neoxr-bot",
   "main": "index.js",
