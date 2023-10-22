@@ -30,7 +30,7 @@ const {
    makeInMemoryStore,
    getAggregateVotesInPollMessage,
    updateMessageWithPollUpdate
-} = require(baileys)
+} = require("@WhiskeySockets/baileys")
 const PhoneNumber = require('awesome-phonenumber')
 const Exif = new (require('./exif'))
 const Func = new (require('./functions'))
