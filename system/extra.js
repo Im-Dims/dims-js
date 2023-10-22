@@ -43,10 +43,11 @@ const store = makeInMemoryStore({
 })
 
 // don't rename "neoxr_store.json" to avoid error!!
-store.readFromFile('./session/neoxr_store.json')
+/*store.readFromFile('./session/neoxr_store.json')
 setInterval(() => {
    store.writeToFile('./session/neoxr_store.json')
 }, 10_000)
+*/
 
 Socket = (...args) => {
    let client = makeWASocket(...args)
