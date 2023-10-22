@@ -7,7 +7,7 @@
       "test":"echo \"Error: no test specified\" && exit 1"
    },
    "dependencies":{
-      "@adiwajshing/baileys":"npm:@whiskeysockets/baileys",
+      "@whiskeysockets/baileys": "github:WhiskeySockets/Baileys",
       "awesome-phonenumber":"~2.59.0",
       "axios":"~0.24.0",
       "chalk":"~4.1.0",
