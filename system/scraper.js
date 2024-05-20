@@ -3,7 +3,7 @@ const cheerio = require('cheerio')
 const fetch = require('node-fetch')
 const FormData = require('form-data')
 const { fromBuffer } = require('file-type')
-global.creator = `@neoxx.js – Wildan Izzudin`
+global.creator = `@dims.js – Im-Dims`
 
 module.exports = class Scraper {
    /* Chat AI
