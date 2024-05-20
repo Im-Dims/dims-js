@@ -1,6 +1,6 @@
 {
    "version":"1.5.5",
-   "name":"@neoxr/neoxr-js",
+   "name":"@Im-Dims/dims-js",
    "description":"All class functions for neoxr-bot",
    "main":"index.js",
    "scripts":{
@@ -39,7 +39,7 @@
       "syntax-error":"~1.4.0",
       "util":"~0.12.4"
    },
-   "homepage":"https://github.com/neoxr/neoxr-bot",
-   "author":"Wildan Izzudin",
+   "homepage":"https://github.com/Im-Dims/mari-wabot",
+   "author":"Im-Dims",
    "license":"ISC"
 }
