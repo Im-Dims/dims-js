@@ -7,7 +7,7 @@ const PostgreSQL = /postgres/.test(process.env.DATABASE_URL) && process.env.DATA
 const Dataset = process.env.DATABASE_URL ? new (require('./system/multidb')) : false
 const Extra = require('./system/extra')
 const Logs = require('./system/logs')
-const NeoxrCommands = new (require('./system/neoxr'))
+const DimsCommands = new (require('./system/neoxr'))
 module.exports = class Component {
    Converter = Converter
    Function = Function
@@ -17,5 +17,5 @@ module.exports = class Component {
    Dataset = Dataset
    Extra = Extra
    Logs = Logs
-   NeoxrCommands = NeoxrCommands
+   DimsCommands = DimsCommands
 }
