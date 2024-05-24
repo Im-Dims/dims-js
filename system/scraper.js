@@ -36,7 +36,7 @@ module.exports = class Scraper {
 
 bard = (prompt) => {
   try {
-    const response = await Funct.axios.post('https://bard.rizzy.eu.org/backend/conversation', {
+    const response = await axios.post('https://bard.rizzy.eu.org/backend/conversation', {
       ask: prompt
     }, {
       headers: {
