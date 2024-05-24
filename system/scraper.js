@@ -48,10 +48,10 @@ module.exports = class Scraper {
                   'accept': 'application/json'
                }
             })
-            if (response.status_code != 200) return resolve({
+            if (response.error) return resolve({
                creator: global.creator,
                status: false,
-               msg: `Status code 404!`
+               msg: 'status code 404!'
             })
             resolve({
                creator: global.creator,
