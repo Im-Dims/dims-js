@@ -35,6 +35,7 @@ module.exports = class Scraper {
    }
 
 bard = (prompt) => {
+   return new Promise(async (resolve) => {
   try {
     const response = await axios.post('https://bard.rizzy.eu.org/backend/conversation', {
       ask: prompt
@@ -53,6 +54,7 @@ bard = (prompt) => {
    creator: global.creator,
    status: false
   }
+})
 }
    
    /* Simsimi Chat
