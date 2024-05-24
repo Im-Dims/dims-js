@@ -34,6 +34,27 @@ module.exports = class Scraper {
       })
    }
 
+bard = (prompt) => {
+  try {
+    const response = await Funct.axios.post('https://bard.rizzy.eu.org/backend/conversation', {
+      ask: prompt
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'accept': 'application/json'
+      }
+    })
+    const res = response.data.content
+    return {
+      creator,
+      res
+    }
+  } catch (e) {
+   creator: global.creator,
+   status: false
+  }
+}
+   
    /* Simsimi Chat
     * @param {String} text
     */
