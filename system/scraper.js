@@ -6,11 +6,12 @@ const { fromBuffer } = require('file-type')
 global.creator = `@dims.js – Im-Dims`
 
 module.exports = class Scraper {
-   /* Chat AI
+   /**
+    * Chat AI
     * @param {String} bid
     * @param {String} key
     * @param {String} text
-    */
+   **/
    chatAI = (bid, key, text) => {
       return new Promise(async (resolve) => {
          try {
@@ -34,32 +35,46 @@ module.exports = class Scraper {
       })
    }
 
-bard = (prompt) => {
-   return new Promise(async (resolve) => {
-  try {
-    const response = await axios.post('https://bard.rizzy.eu.org/backend/conversation', {
-      ask: prompt
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-        'accept': 'application/json'
-      }
-    })
-    const res = response.data.content
-    return {
-      creator,
-      res
-    }
-  } catch (e) {
-   creator: global.creator,
-   status: false
-  }
-})
-}
+   /**
+    * Bard
+    * @param {String} prompt
+   **/
+   bard = (prompt) => {
+      return new Promise(async (resolve) => {
+         try {
+            let response = await axios.post('https://bard.rizzy.eu.org/backend/conversation', { ask: prompt }, {
+               headers: {
+                  'Content-Type': 'application/json',
+                  'accept': 'application/json'
+               }
+            })
+            if (json.status_code != 200) return resolve({
+               creator: global.creator,
+               status: false,
+               msg: `Eror!`
+            })
+            resolve({
+               creator: global.creator,
+               status: true,
+               data: {
+                  respon: response.data.content
+               }
+            })
+         } catch (e) {
+            console.log(e)
+            resolve({
+               creator: global.creator,
+               status: false,
+               msg: e.message
+            })
+         }
+      })
+   }
    
-   /* Simsimi Chat
+   /**
+    * Simsimi Chat
     * @param {String} text
-    */
+   **/
    simsimi = (text, lang = 'id') => {
       return new Promise(async (resolve) => {
          try {
@@ -90,9 +105,10 @@ bard = (prompt) => {
       })
    }
 
-   /* Simsimi Chat V2
+   /**
+    * Simsimi Chat V2
     * @param {String} text
-    */
+   **/
    simsimiV2 = (text) => {
       return new Promise(async (resolve) => {
          try { // https://simsimi.net/ & https://simsimi.info
@@ -116,9 +132,10 @@ bard = (prompt) => {
       })
    }
 
-   /* URL Shortener
+   /**
+    * URL Shortener
     * @param {String} url
-    */
+   **/
    shorten = (url) => {
       return new Promise(async (resolve) => {
          try {
@@ -149,9 +166,10 @@ bard = (prompt) => {
       })
    }
 
-   /* Image Uploader (freeimage.host) [Permanent]
+   /**
+    * Image Uploader (freeimage.host) [Permanent]
     * @param {Buffer} buffer
-    */
+   **/
    uploadImage = async input => {
       return new Promise(async resolve => {
          try {
@@ -205,9 +223,10 @@ bard = (prompt) => {
       })
    }
 
-   /* Image Uploader V2 (707a8191-3fe9-4568-a03e-763edd45f0bb.id.repl.co) [Temp]
+   /**
+    * Image Uploader V2 (707a8191-3fe9-4568-a03e-763edd45f0bb.id.repl.co) [Temp]
     * @param {Buffer} buffer
-    */
+   **/
    uploadImageV2 = (buffer) => {
       return new Promise(async (resolve, reject) => {
          try {
@@ -233,9 +252,10 @@ bard = (prompt) => {
       })
    }
 
-   /* Image Uploader (telegra.ph)
+   /**
+    * Image Uploader (telegra.ph)
     * @param {Buffer} buffer
-    */
+   **/
    uploadImageV3 = async (str) => {
       return new Promise(async resolve => {
          try {
@@ -286,9 +306,10 @@ bard = (prompt) => {
       })
    }
 
-   /* File Uploader (707a8191-3fe9-4568-a03e-763edd45f0bb.id.repl.co) [Permanent]
+   /**
+    * File Uploader (707a8191-3fe9-4568-a03e-763edd45f0bb.id.repl.co) [Permanent]
     * @param {Buffer} buffer
-    */
+   **/
    uploadFile = (buffer) => {
       return new Promise(async (resolve, reject) => {
          try {
@@ -314,10 +335,11 @@ bard = (prompt) => {
       })
    }
 
-   /* Temp File Upload (file.io)
+   /**
+    * Temp File Upload (file.io)
     * @param {Buffer} buffer
     * @param {String} name
-    */
+   **/
    uploadFileV2 = (buffer, name) => {
       return new Promise(async (resolve) => {
          try {
@@ -359,9 +381,10 @@ bard = (prompt) => {
       })
    }
 
-   /* To Video (EzGif)
+   /**
+    * To Video (EzGif)
     * @param {String|Buffer} str
-    */
+   **/
    toVideo = async (str) => {
       return new Promise(async resolve => {
          try {
