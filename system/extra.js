@@ -14,7 +14,7 @@ const FileType = require('file-type')
 const ffmpeg = require('fluent-ffmpeg')
 const pino = require('pino')
 const sh = require("caliph-api")
-const baileys = fs.existsSync('./node_modules/baileys') ? 'baileys' : fs.existsSync('./node_modules/@adiwajshing/baileys') ? '@adiwajshing/baileys' : 'bails'
+const baileys = require('@adiwajshing/baileys')
 const PhoneNumber = require('awesome-phonenumber')
 const {
    default: makeWASocket,
