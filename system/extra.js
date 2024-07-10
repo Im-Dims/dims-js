@@ -1031,5 +1031,5 @@ Scandir = async (dir) => {
 }
 
 exports.Socket = Socket
-exports.Serialize = Serialize
+exports.Serialize = smsg
 exports.Scandir = Scandir
