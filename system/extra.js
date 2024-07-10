@@ -36,7 +36,7 @@ const {
    makeInMemoryStore,
    getAggregateVotesInPollMessage,
    updateMessageWithPollUpdate
-} = require(baileys)
+} = require('@whiskeysockets/baileys')
 
 const Exif = new (require('./exif'))
 const Func = new (require('./functions'))
