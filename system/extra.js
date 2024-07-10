@@ -14,7 +14,7 @@ const FileType = require('file-type')
 const ffmpeg = require('fluent-ffmpeg')
 const pino = require('pino')
 const sh = require("caliph-api")
-const baileys = require('@adiwajshing/baileys')
+const baileys = require('@whiskeysockets/baileys')
 const PhoneNumber = require('awesome-phonenumber')
 const {
    default: makeWASocket,
